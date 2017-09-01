@@ -1,0 +1,34 @@
+#ifndef CREATURE_H
+#define CREATURE_H
+
+class CreatureNod
+{
+private:
+    double x, y;
+    unsigned double mass;
+    unsigned double viscosity;
+    double velocityX, velocityY;
+public:
+    double getX(){return this->x;}
+    double getY(){return this->y;}
+    unsigned double getMass(){return this->mass;}
+    unsigned double getViscosity(){return this->viscosity;}
+     double getVelocityX(){return  this->velocityX;}
+    void setX(double x){this->x = x;}
+    void setY(double y){this->y = y;}
+    void setMass(unsigned double m){this->mass = m;}
+    void setViscosity(unsigned double v){this->viscosity = v;}
+    void setVelocityX(unsigned double vx){this->velocityX = vx;}
+    void setVelocityY(unsigned double vy){this->velocityY = vy;}
+};
+
+class Creature
+{
+    public:
+        Creature();
+        virtual ~Creature();
+    protected:
+    private:
+};
+
+#endif // CREATURE_H

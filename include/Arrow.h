@@ -1,0 +1,91 @@
+#ifndef ARROW_H
+#define ARROW_H
+#include <math.h>
+
+class Arrow
+{
+    public:
+        Arrow(double x, double y, double z);
+        Arrow();
+        virtual ~Arrow();
+        void setArrow(double x, double y, double z);
+        void setX(double x){this->x = x;}
+        void setY(double y){this->y = y;}
+        void setZ(double z){this->z = z;}
+        double getX(){return this->x;}
+        double getY(){return this->y;}
+        double getZ(){return this->z;}
+        double getLengthSquared(){return x*x+y*y+z*z;}
+        double getLength(){return sqrt(getLengthSquared());}
+        void makeUnit(){if(this->getLength() != 0) *this/=this->getLength();}
+        void makeReversed(){setArrow(-x,-y,-z);}
+        Arrow projectOn(Arrow with);
+        Arrow getUnit();
+        Arrow getAxis();
+        Arrow operator+(const Arrow& added)
+        {
+            Arrow result(this->x + added.x, this->y + added.y, this->z + added.z);
+            return result;
+        }
+        Arrow operator+=(const Arrow& added)
+        {
+            this->setArrow(this->x + added.x, this->y + added.y, this->z + added.z);
+            return *this;
+        }
+        Arrow operator-(const Arrow& subtracted)
+        {
+            Arrow result(this->x - subtracted.x, this->y - subtracted.y, this->z - subtracted.z);
+            return result;
+        }
+        Arrow operator-=(const Arrow& subtracted)
+        {
+            this->setArrow(this->x - subtracted.x, this->y - subtracted.y, this->z - subtracted.z);
+            return *this;
+        }
+        Arrow operator*(const Arrow& multiplied)
+        {
+            double x = this->y * multiplied.z - this->z * multiplied.y;
+            double y = this->z * multiplied.x - this->x * multiplied.z;
+            double z = this->x * multiplied.y - this->y * multiplied.x;
+            Arrow result(x,y,z);
+            return result;
+        }
+        Arrow operator*=(const Arrow& multiplied)
+        {
+            double x = this->y * multiplied.z - this->z * multiplied.y;
+            double y = this->z * multiplied.x - this->x * multiplied.z;
+            double z = this->x * multiplied.y - this->y * multiplied.x;
+            this->setArrow(x,y,z);
+            return *this;
+        }
+        Arrow operator*(const double& multiplied)
+        {
+            Arrow result(this->x*multiplied, this->y*multiplied, this->z*multiplied);
+            return result;
+        }
+        Arrow operator*=(const double& multiplied)
+        {
+            this->setArrow(this->x*multiplied, this->y*multiplied, this->z*multiplied);
+            return *this;
+        }
+        Arrow operator = (const Arrow& equaled)
+        {
+            this->setArrow(equaled.x,equaled.y,equaled.z);
+            return *this;
+        }
+        Arrow operator/(const double& divider)
+        {
+            Arrow result(this->x/divider, this->y/divider, this->z/divider);
+            return result;
+        }
+        Arrow operator/=(const double& divider)
+        {
+            this->setArrow(this->x/divider, this->y/divider, this->z/divider);
+            return *this;
+        }
+    protected:
+    private:
+        double x, y, z;
+};
+
+#endif // ARROW_H
